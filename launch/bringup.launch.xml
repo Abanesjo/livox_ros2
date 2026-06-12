@@ -1,0 +1,17 @@
+<launch>
+  <arg name="rviz" default="false" description="Start RViz2 with the MID360 point cloud display"/>
+
+  <node pkg="livox_ros_driver2" exec="livox_ros_driver2_node" name="livox_lidar_publisher" output="screen">
+    <param name="xfer_format" value="0"/>
+    <param name="multi_topic" value="0"/>
+    <param name="data_src" value="0"/>
+    <param name="publish_freq" value="10.0"/>
+    <param name="output_data_type" value="0"/>
+    <param name="frame_id" value="livox_frame"/>
+    <param name="user_config_path" value="$(find-pkg-share livox_ros_driver2)/config/MID360_config.json"/>
+  </node>
+
+  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen"
+        args="-d $(find-pkg-share livox_ros_driver2)/config/display_point_cloud.rviz"
+        if="$(var rviz)"/>
+</launch>
